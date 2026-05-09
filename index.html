@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Secret Message For You ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(135deg,#090909,#161616,#220d17);
+    overflow:hidden;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+}
+
+/* BACKGROUND PARTICLES */
+
+.particles{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    z-index:-1;
+}
+
+.particle{
+    position:absolute;
+    width:4px;
+    height:4px;
+    background:white;
+    border-radius:50%;
+    opacity:0.4;
+    animation:floatUp linear infinite;
+}
+
+@keyframes floatUp{
+    from{
+        transform:translateY(100vh);
+        opacity:0;
+    }
+
+    30%{
+        opacity:1;
+    }
+
+    to{
+        transform:translateY(-120vh);
+        opacity:0;
+    }
+}
+
+/* ENVELOPE */
+
+.container{
+    position:relative;
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+
+.envelope-wrapper{
+    position:relative;
+    width:340px;
+    height:240px;
+    cursor:pointer;
+    transition:1s ease;
+}
+
+.envelope{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#ff5c8a;
+    border-radius:12px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.5);
+    overflow:hidden;
+}
+
+.envelope::before{
+    content:'';
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    clip-path:polygon(0 0,50% 55%,100% 0);
+    background:#ff7ca4;
+    transform-origin:top;
+    transition:1s ease;
+    z-index:5;
+}
+
+.envelope.open::before{
+    transform:rotateX(180deg);
+}
+
+.letter{
+    position:absolute;
+    width:90%;
+    height:88%;
+    background:white;
+    left:5%;
+    top:6%;
+    border-radius:10px;
+    color:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    padding:25px;
+    transform:translateY(100px);
+    transition:1s ease;
+}
+
+.envelope.open .letter{
+    transform:translateY(-120px);
+}
+
+.lock-screen{
+    text-align:center;
+}
+
+.lock-screen h2{
+    color:#ff4f86;
+    margin-bottom:15px;
+}
+
+.lock-screen p{
+    font-size:0.9rem;
+    margin-bottom:20px;
+    color:#666;
+}
+
+input{
+    width:170px;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    text-align:center;
+    font-size:1.1rem;
+    outline:none;
+    background:#f0f0f0;
+}
+
+button{
+    margin-top:15px;
+    padding:12px 30px;
+    border:none;
+    border-radius:30px;
+    background:#ff4f86;
+    color:white;
+    cursor:pointer;
+    font-size:1rem;
+    transition:0.3s ease;
+}
+
+button:hover{
+    transform:scale(1.05);
+    background:#ff2f70;
+}
+
+/* SECRET MESSAGE */
+
+.message-screen{
+    display:none;
+    text-align:center;
+    animation:fadeIn 2s ease;
+}
+
+.message-screen h1{
+    font-family:'Dancing Script',cursive;
+    color:#ff4f86;
+    font-size:3rem;
+    margin-bottom:20px;
+}
+
+.message-text{
+    font-size:1.1rem;
+    line-height:2;
+    color:#333;
+    max-width:400px;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0px);
+    }
+}
+
+/* HEARTS */
+
+.hearts span{
+    position:absolute;
+    font-size:20px;
+    color:#ff4f86;
+    animation:rise 6s linear infinite;
+    opacity:0;
+}
+
+@keyframes rise{
+
+    0%{
+        transform:translateY(0) scale(0.5);
+        opacity:0;
+    }
+
+    20%{
+        opacity:1;
+    }
+
+    100%{
+        transform:translateY(-700px) scale(1.4);
+        opacity:0;
+    }
+}
+
+/* GLOW */
+
+.glow{
+    position:absolute;
+    width:500px;
+    height:500px;
+    background:radial-gradient(circle,
+    rgba(255,79,134,0.2),
+    transparent 70%);
+    filter:blur(50px);
+    z-index:-1;
+    animation:pulse 5s infinite alternate;
+}
+
+@keyframes pulse{
+    from{
+        transform:scale(1);
+        opacity:0.5;
+    }
+
+    to{
+        transform:scale(1.2);
+        opacity:1;
+    }
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .envelope-wrapper{
+        width:300px;
+        height:210px;
+    }
+
+    .message-screen h1{
+        font-size:2.4rem;
+    }
+
+    .message-text{
+        font-size:1rem;
+    }
+}
+  #loader{
+    position:fixed;
+    inset:0;
+    background:#050505;
+    z-index:99999;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    transition:1s ease;
+}
+
+.loader-heart{
+    font-size:5rem;
+    color:#ff4f86;
+    animation:pulseLoader 1.5s infinite;
+}
+
+#loader p{
+    margin-top:20px;
+    letter-spacing:3px;
+    color:white;
+}
+
+@keyframes pulseLoader{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.2);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+}
+
+/* MUSIC BUTTON */
+
+.music-btn{
+    position:fixed;
+    top:20px;
+    right:20px;
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(10px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    cursor:pointer;
+    z-index:9999;
+    box-shadow:0 0 3
+
+</style>
+</head>
+<body>
+  <!-- LOADING SCREEN -->
+
+<div id="loader">
+    <div class="loader-heart">❤</div>
+    <p>Opening Secret Letter...</p>
+</div>
+
+<!-- BACKGROUND MUSIC -->
+
+<audio autoplay loop id="bgMusic">
+    <source src="music/song.mp3" type="audio/mp3">
+</audio>
+
+<!-- MUSIC BUTTON -->
+
+<div class="music-btn" onclick="toggleMusic()">
+    🎵
+</div>
+
+<div class="particles"></div>
+<div class="glow"></div>
+
+<div class="container">
+
+    <div class="envelope-wrapper" onclick="openEnvelope()">
+
+        <div class="envelope" id="envelope">
+
+            <div class="letter">
+
+                <!-- PASSWORD SCREEN -->
+
+                <div class="lock-screen" id="lockScreen">
+
+                    <h2>Secret Letter 💌</h2>
+
+                    <p>Enter the passcode to open this message</p>
+
+                    <input type="password" id="password" placeholder="Enter Passcode">
+
+                    <br>
+
+                    <button onclick="checkPassword(event)">Open Letter</button>
+
+                </div>
+
+
+                <!-- SECRET MESSAGE -->
+
+                <div class="message-screen" id="messageScreen">
+
+                    <h1>To You ❤️</h1>
+
+                    <div class="message-text" id="typewriter">
+
+                        Maybe you never realized this...
+                        but somewhere between our conversations,
+                        your smile,
+                        your presence,
+                        and all those tiny moments...
+
+                        <br><br>
+
+                        you quietly became someone very special to me.
+
+                        <br><br>
+
+                        And honestly?
+                        I think my heart knew it before I did.
+
+                        <br><br>
+
+                        — Yours Secretly ✨
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="hearts">
+    <span style="left:10%; animation-delay:0s;">❤</span>
+    <span style="left:25%; animation-delay:1s;">❤</span>
+    <span style="left:40%; animation-delay:2s;">❤</span>
+    <span style="left:60%; animation-delay:3s;">❤</span>
+    <span style="left:75%; animation-delay:4s;">❤</span>
+    <span style="left:90%; animation-delay:5s;">❤</span>
+</div>
+
+<script>
+
+/* PARTICLES */
+
+const particles = document.querySelector('.particles');
+
+for(let i=0;i<80;i++){
+
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+
+    particle.style.left = Math.random()*100 + 'vw';
+    particle.style.animationDuration = (Math.random()*10+5)+'s';
+    particle.style.animationDelay = Math.random()*5+'s';
+
+    particles.appendChild(particle);
+}
+
+/* OPEN ENVELOPE */
+
+function openEnvelope(){
+
+    document.getElementById('envelope').classList.add('open');
+}
+
+/* PASSWORD CHECK */
+
+function checkPassword(event){
+
+    event.stopPropagation();
+
+    const pass = document.getElementById('password').value;
+
+    if(pass === '0905'){
+
+        document.getElementById('lockScreen').style.display='none';
+        document.getElementById('messageScreen').style.display='block';
+
+        typeWriter();
+    }
+    else{
+
+        alert('Wrong passcode ❤️');
+    }
+}
+
+/* TYPEWRITER EFFECT */
+
+const textElement = document.getElementById('typewriter');
+const originalText = textElement.innerHTML;
+textElement.innerHTML = '';
+
+function typeWriter(){
+
+    let i = 0;
+
+    function typing(){
+
+        if(i < originalText.length){
+
+            textElement.innerHTML += originalText.charAt(i);
+            i++;
+
+            setTimeout(typing,25);
+        }
+    }
+
+    typing();
+}
+
+</script>
+
+</body>
+</html>
