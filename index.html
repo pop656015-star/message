@@ -346,7 +346,7 @@ button:hover{
 
 <!-- BACKGROUND MUSIC -->
 
-<audio autoplay loop id="bgMusic">
+<audio loop id="bgMusic">
     <source src="music/song.mp3" type="audio/mp3">
 </audio>
 
@@ -501,6 +501,36 @@ function typeWriter(){
 
     typing();
 }
+    /* FORCE REMOVE LOADER ON MOBILE */
+
+setTimeout(()=>{
+
+    const loader = document.getElementById('loader');
+
+    if(loader){
+
+        loader.style.opacity='0';
+
+        setTimeout(()=>{
+            loader.style.display='none';
+        },1000);
+    }
+
+},2500);
+
+
+/* MOBILE MUSIC FIX */
+
+document.body.addEventListener('click', () => {
+
+    const music = document.getElementById('bgMusic');
+
+    if(music){
+
+        music.play().catch(()=>{});
+    }
+
+}, { once:true });
 
 </script>
 
