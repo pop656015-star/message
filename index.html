@@ -345,33 +345,44 @@ button:hover{
 .message-card{
 
     width:92%;
-    max-width:700px;
+    max-width:720px;
 
-    height:78vh;
+    height:82vh;
 
     background:
-    rgba(255,255,255,0.08);
+    linear-gradient(
+        145deg,
+        rgba(255,255,255,0.10),
+        rgba(255,255,255,0.05)
+    );
 
-    backdrop-filter:blur(18px);
+    backdrop-filter:blur(22px);
 
-    border:1px solid rgba(255,255,255,0.12);
+    border:
+    1px solid rgba(255,255,255,0.12);
 
-    border-radius:30px;
+    border-radius:32px;
 
-    padding:35px 24px;
+    padding:45px 26px 90px;
 
     text-align:center;
 
     box-shadow:
-    0 20px 60px rgba(0,0,0,0.4);
+    0 20px 80px rgba(0,0,0,0.45);
 
     animation:fadeUp 1.5s ease;
 
     overflow-y:auto;
 
+    overflow-x:hidden;
+
+    scroll-behavior:smooth;
+
+    -webkit-overflow-scrolling:touch;
+
     scrollbar-width:none;
 
-    -ms-overflow-style:none;
+    position:relative;
 }
 
 /* HIDE SCROLLBAR */
@@ -379,6 +390,55 @@ button:hover{
 .message-card::-webkit-scrollbar{
 
     display:none;
+}
+
+/* HIDE SCROLLBAR */
+
+.message-card::-webkit-scrollbar{
+
+    display:none;
+}
+    /* TOP & BOTTOM FADE EFFECT */
+
+.message-card::before,
+.message-card::after{
+
+    content:'';
+
+    position:fixed;
+
+    left:0;
+
+    width:100%;
+    height:50px;
+
+    pointer-events:none;
+
+    z-index:5;
+}
+
+.message-card::before{
+
+    top:0;
+
+    background:
+    linear-gradient(
+        to bottom,
+        rgba(20,0,10,0.85),
+        transparent
+    );
+}
+
+.message-card::after{
+
+    bottom:0;
+
+    background:
+    linear-gradient(
+        to top,
+        rgba(20,0,10,0.85),
+        transparent
+    );
 }
 
 @keyframes fadeUp{
@@ -407,17 +467,36 @@ button:hover{
 
 .message-text{
 
-    font-size:1.05rem;
+    font-size:1.08rem;
 
-    line-height:2.2;
+    line-height:2.4;
 
-    color:#f5f5f5;
+    color:#f8f8f8;
 
     text-align:center;
 
     word-wrap:break-word;
 
-    padding-bottom:80px;
+    letter-spacing:0.4px;
+
+    font-weight:300;
+
+    animation:textFade 2s ease;
+}
+
+@keyframes textFade{
+
+    from{
+
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 /* HEARTS */
@@ -456,35 +535,30 @@ button:hover{
 
 @media(max-width:600px){
 
-    .envelope{
-
-        width:280px;
-        height:200px;
-    }
-
     .message-card{
 
-        width:92%;
+        width:94%;
 
-        height:82vh;
+        height:84vh;
 
-        padding:30px 18px;
+        padding:
+        40px 20px 100px;
 
-        border-radius:25px;
+        border-radius:28px;
     }
 
     .message-card h1{
 
-        font-size:2.5rem;
+        font-size:2.6rem;
 
-        margin-bottom:20px;
+        margin-bottom:24px;
     }
 
     .message-text{
 
         font-size:1rem;
 
-        line-height:2.1;
+        line-height:2.3;
     }
 }
 </style>
