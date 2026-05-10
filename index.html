@@ -109,21 +109,33 @@ body{
 }
 
 .letter{
+
     position:absolute;
-    width:90%;
-    height:88%;
+    width:88%;
+    min-height:420px;
+
     background:white;
-    left:5%;
-    top:6%;
-    border-radius:10px;
+
+    left:6%;
+    top:5%;
+
+    border-radius:25px;
+
     color:black;
+
     display:flex;
-    justify-content:center;
+    justify-content:flex-start;
     align-items:center;
     flex-direction:column;
-    padding:25px;
+
+    padding:30px 22px;
+
     transform:translateY(100px);
     transition:1s ease;
+
+    overflow-y:auto;
+
+    box-shadow:0 20px 50px rgba(0,0,0,0.25);
 }
 
 .envelope.open .letter{
@@ -189,10 +201,12 @@ button:hover{
 }
 
 .message-text{
-    font-size:1.1rem;
-    line-height:2;
+
+    width:100%;
+    text-align:center;
     color:#333;
-    max-width:400px;
+
+    word-wrap:break-word;
 }
 
 @keyframes fadeIn{
@@ -262,19 +276,63 @@ button:hover{
 
 /* MOBILE */
 
+
 @media(max-width:600px){
 
+    body{
+        overflow-x:hidden;
+    }
+
     .envelope-wrapper{
-        width:300px;
-        height:210px;
+
+        width:92vw;
+        height:520px;
+
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
+
+    .letter{
+
+        width:90%;
+        left:5%;
+        min-height:430px;
+
+        padding:28px 20px;
     }
 
     .message-screen h1{
-        font-size:2.4rem;
+
+        font-size:2.3rem;
+        margin-bottom:18px;
     }
 
     .message-text{
+
         font-size:1rem;
+        line-height:2;
+        text-align:center;
+    }
+
+    input{
+
+        width:85%;
+        font-size:1rem;
+    }
+
+    button{
+
+        width:85%;
+    }
+
+    .music-btn{
+
+        width:55px;
+        height:55px;
+
+        top:15px;
+        right:15px;
     }
 }
   #loader{
@@ -480,26 +538,18 @@ function checkPassword(event){
 
 /* TYPEWRITER EFFECT */
 
-const textElement = document.getElementById('typewriter');
-const originalText = textElement.innerHTML;
-textElement.innerHTML = '';
-
 function typeWriter(){
 
-    let i = 0;
+    const textElement = document.getElementById('typewriter');
 
-    function typing(){
+    textElement.style.opacity = '0';
 
-        if(i < originalText.length){
+    setTimeout(()=>{
 
-            textElement.innerHTML += originalText.charAt(i);
-            i++;
+        textElement.style.transition = '2s ease';
+        textElement.style.opacity = '1';
 
-            setTimeout(typing,25);
-        }
-    }
-
-    typing();
+    },300);
 }
     /* FORCE REMOVE LOADER ON MOBILE */
 
