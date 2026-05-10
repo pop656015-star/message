@@ -22,7 +22,8 @@ body{
     font-family:'Poppins',sans-serif;
 
     height:100vh;
-    overflow:hidden;
+   overflow-x:hidden;
+overflow-y:auto;
 
     display:flex;
     justify-content:center;
@@ -42,8 +43,12 @@ body{
 
     position:fixed;
     inset:0;
+
     overflow:hidden;
+
     z-index:-2;
+
+    pointer-events:none;
 }
 
 .particle{
@@ -383,6 +388,10 @@ button:hover{
     scrollbar-width:none;
 
     position:relative;
+
+    touch-action:pan-y;
+
+    overscroll-behavior:contain;
 }
 
 /* HIDE SCROLLBAR */
@@ -401,6 +410,20 @@ button:hover{
     /* TOP & BOTTOM FADE EFFECT */
 
 .message-card::before,
+
+
+.message-card::before{
+
+    top:0;
+
+    background:
+    linear-gradient(
+        to bottom,
+        rgba(20,0,10,0.85),
+        transparent
+    );
+}
+.message-card::after,
 .message-card::after{
 
     content:'';
@@ -415,30 +438,6 @@ button:hover{
     pointer-events:none;
 
     z-index:5;
-}
-
-.message-card::before{
-
-    top:0;
-
-    background:
-    linear-gradient(
-        to bottom,
-        rgba(20,0,10,0.85),
-        transparent
-    );
-}
-
-.message-card::after{
-
-    bottom:0;
-
-    background:
-    linear-gradient(
-        to top,
-        rgba(20,0,10,0.85),
-        transparent
-    );
 }
 
 @keyframes fadeUp{
@@ -501,6 +500,11 @@ button:hover{
 
 /* HEARTS */
 
+.hearts{
+
+    pointer-events:none;
+}
+
 .hearts span{
 
     position:absolute;
@@ -512,6 +516,10 @@ button:hover{
     animation:rise 6s linear infinite;
 
     opacity:0;
+
+    pointer-events:none;
+
+    will-change:transform;
 }
 
 @keyframes rise{
