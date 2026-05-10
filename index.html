@@ -29,14 +29,16 @@ body{
     align-items:center;
 
     background:
-    radial-gradient(circle at top,#32101d,#090909 70%);
+    radial-gradient(circle at top,
+    #3b0f20,
+    #090909 75%);
 
     color:white;
 }
 
-/* PARTICLES */
+/* BACKGROUND */
 
-.particles{
+.bg-particles{
 
     position:fixed;
     inset:0;
@@ -47,6 +49,7 @@ body{
 .particle{
 
     position:absolute;
+
     width:4px;
     height:4px;
 
@@ -54,7 +57,7 @@ body{
 
     border-radius:50%;
 
-    opacity:0.4;
+    opacity:0.35;
 
     animation:float linear infinite;
 }
@@ -81,14 +84,14 @@ body{
 
     background:
     radial-gradient(circle,
-    rgba(255,80,130,0.22),
+    rgba(255,70,120,0.25),
     transparent 70%);
 
     filter:blur(60px);
 
     z-index:-1;
 
-    animation:pulse 5s infinite alternate;
+    animation:pulse 6s infinite alternate;
 }
 
 @keyframes pulse{
@@ -132,7 +135,7 @@ body{
 @keyframes beat{
 
     0%{transform:scale(1);}
-    50%{transform:scale(1.2);}
+    50%{transform:scale(1.15);}
     100%{transform:scale(1);}
 }
 
@@ -144,46 +147,39 @@ body{
 
 /* ENVELOPE */
 
-.container{
-
-    width:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-
-.envelope-wrapper{
-
-    position:relative;
-
-    width:92vw;
-    max-width:380px;
-
-    height:260px;
-
-    cursor:pointer;
-}
-
-/* MAIN ENVELOPE */
-
-.envelope{
+.envelope-container{
 
     position:absolute;
 
     width:100%;
-    height:100%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    transition:1s ease;
+}
+
+.envelope{
+
+    position:relative;
+
+    width:320px;
+    height:220px;
 
     background:#ff4f86;
 
-    border-radius:20px;
+    border-radius:18px;
+
+    cursor:pointer;
 
     overflow:hidden;
 
     box-shadow:
-    0 20px 60px rgba(0,0,0,0.5);
+    0 25px 70px rgba(0,0,0,0.45);
 }
 
-/* TOP FLAP */
+/* FLAP */
 
 .envelope::before{
 
@@ -194,11 +190,9 @@ body{
     width:100%;
     height:100%;
 
-    background:#ff74a2;
+    background:#ff78a5;
 
-    clip-path:polygon(0 0,50% 55%,100% 0);
-
-    transform-origin:top;
+    clip-path:polygon(0 0,50% 58%,100% 0);
 
     transition:1s ease;
 
@@ -210,64 +204,69 @@ body{
     transform:rotateX(180deg);
 }
 
-/* LETTER */
+/* ICON */
 
-.letter{
+.mail-icon{
 
     position:absolute;
 
-    width:88%;
-    height:82%;
-
-    left:6%;
-    top:9%;
-
-    background:white;
-
-    border-radius:20px;
-
-    padding:28px 22px;
-
-    color:#222;
-
-    overflow-y:auto;
+    inset:0;
 
     display:flex;
     justify-content:center;
     align-items:center;
-    flex-direction:column;
 
-    transition:1s ease;
+    font-size:4rem;
 
-    transform:translateY(90px);
+    z-index:2;
 }
 
-.envelope.open .letter{
+/* PASSWORD BOX */
 
-    transform:translateY(-90px);
-}
+.password-box{
 
-/* PASSWORD */
+    position:fixed;
 
-.lock-screen{
+    width:90%;
+    max-width:340px;
 
-    width:100%;
+    background:white;
+
+    padding:30px;
+
+    border-radius:25px;
+
     text-align:center;
+
+    color:#222;
+
+    opacity:0;
+    pointer-events:none;
+
+    transform:translateY(30px);
+
+    transition:0.5s ease;
+
+    z-index:100;
 }
 
-.lock-screen h2{
+.password-box.show{
+
+    opacity:1;
+    pointer-events:auto;
+    transform:translateY(0);
+}
+
+.password-box h2{
 
     color:#ff4f86;
-    margin-bottom:12px;
-
-    font-size:2rem;
+    margin-bottom:15px;
 }
 
-.lock-screen p{
+.password-box p{
 
     color:#666;
-    margin-bottom:22px;
-
+    margin-bottom:20px;
     line-height:1.6;
 }
 
@@ -283,13 +282,13 @@ input{
 
     background:#f2f2f2;
 
-    outline:none;
-
     text-align:center;
 
     font-size:1rem;
 
     margin-bottom:18px;
+
+    outline:none;
 }
 
 button{
@@ -310,7 +309,7 @@ button{
 
     cursor:pointer;
 
-    transition:0.4s ease;
+    transition:0.3s ease;
 }
 
 button:hover{
@@ -318,22 +317,59 @@ button:hover{
     transform:scale(1.03);
 }
 
-/* MESSAGE */
+/* MESSAGE SCREEN */
 
 .message-screen{
 
-    display:none;
+    position:fixed;
+    inset:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:30px;
+
+    opacity:0;
+    pointer-events:none;
+
+    transition:1.5s ease;
+}
+
+.message-screen.show{
+
+    opacity:1;
+    pointer-events:auto;
+}
+
+.message-card{
+
+    width:100%;
+    max-width:700px;
+
+    background:rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,0.12);
+
+    border-radius:35px;
+
+    padding:40px 30px;
 
     text-align:center;
 
-    animation:fade 2s ease;
+    box-shadow:
+    0 20px 60px rgba(0,0,0,0.4);
+
+    animation:fadeUp 2s ease;
 }
 
-@keyframes fade{
+@keyframes fadeUp{
 
     from{
         opacity:0;
-        transform:translateY(20px);
+        transform:translateY(50px);
     }
 
     to{
@@ -342,24 +378,24 @@ button:hover{
     }
 }
 
-.message-screen h1{
+.message-card h1{
 
     font-family:'Dancing Script',cursive;
 
-    color:#ff4f86;
+    color:#ff78a5;
 
-    font-size:2.8rem;
+    font-size:3.5rem;
 
-    margin-bottom:20px;
+    margin-bottom:25px;
 }
 
 .message-text{
 
-    line-height:2;
+    font-size:1.1rem;
 
-    color:#333;
+    line-height:2.1;
 
-    font-size:1rem;
+    color:#f5f5f5;
 }
 
 /* HEARTS */
@@ -370,7 +406,7 @@ button:hover{
 
     color:#ff4f86;
 
-    font-size:20px;
+    font-size:22px;
 
     animation:rise 6s linear infinite;
 
@@ -389,7 +425,7 @@ button:hover{
     }
 
     100%{
-        transform:translateY(-700px);
+        transform:translateY(-800px);
         opacity:0;
     }
 }
@@ -398,19 +434,26 @@ button:hover{
 
 @media(max-width:600px){
 
-    .envelope-wrapper{
+    .envelope{
 
-        height:240px;
+        width:280px;
+        height:200px;
     }
 
-    .message-screen h1{
+    .message-card{
 
-        font-size:2.2rem;
+        padding:35px 22px;
+    }
+
+    .message-card h1{
+
+        font-size:2.7rem;
     }
 
     .message-text{
 
-        font-size:0.95rem;
+        font-size:1rem;
+        line-height:2;
     }
 }
 
@@ -439,76 +482,76 @@ button:hover{
 
 <!-- BACKGROUND -->
 
-<div class="particles"></div>
+<div class="bg-particles"></div>
 
 <div class="glow"></div>
 
-<!-- MAIN -->
+<!-- ENVELOPE -->
 
-<div class="container">
+<div class="envelope-container" id="envelopeContainer">
 
-    <div class="envelope-wrapper" onclick="openEnvelope()">
+    <div class="envelope" id="envelope" onclick="openEnvelope()">
 
-        <div class="envelope" id="envelope">
+        <div class="mail-icon">
+            💌
+        </div>
 
-            <div class="letter">
+    </div>
 
-                <!-- LOCK -->
+</div>
 
-                <div class="lock-screen" id="lockScreen">
+<!-- PASSWORD -->
 
-                    <h2>Secret Letter 💌</h2>
+<div class="password-box" id="passwordBox">
 
-                    <p>
-                        Enter the passcode
-                        to reveal the hidden message
-                    </p>
+    <h2>Secret Letter ❤️</h2>
 
-                    <input
-                    type="password"
-                    id="password"
-                    placeholder="Enter Passcode">
+    <p>
+        Enter the passcode
+        to unlock the hidden message
+    </p>
 
-                    <button onclick="checkPassword(event)">
-                        Open Letter
-                    </button>
+    <input
+    type="password"
+    id="password"
+    placeholder="Enter Passcode">
 
-                </div>
+    <button onclick="checkPassword()">
+        Open Letter
+    </button>
 
-                <!-- MESSAGE -->
+</div>
 
-                <div class="message-screen" id="messageScreen">
+<!-- MESSAGE -->
 
-                    <h1>To You ❤️</h1>
+<div class="message-screen" id="messageScreen">
 
-                    <div class="message-text">
+    <div class="message-card">
 
-                        Maybe you never realized this...
-                        but somewhere between our conversations,
-                        your smile,
-                        your presence,
-                        and all those tiny moments...
+        <h1>To You ❤️</h1>
 
-                        <br><br>
+        <div class="message-text">
 
-                        you quietly became someone
-                        very special to me.
+            Maybe you never realized this...
+            but somewhere between our conversations,
+            your smile,
+            your presence,
+            and all those tiny moments...
 
-                        <br><br>
+            <br><br>
 
-                        And honestly...
-                        I think my heart knew it
-                        before I did.
+            you quietly became someone
+            very special to me.
 
-                        <br><br>
+            <br><br>
 
-                        — Yours Secretly ✨
+            And honestly...
+            I think my heart knew it
+            before I did.
 
-                    </div>
+            <br><br>
 
-                </div>
-
-            </div>
+            — Yours Secretly ✨
 
         </div>
 
@@ -516,7 +559,7 @@ button:hover{
 
 </div>
 
-<!-- FLOATING HEARTS -->
+<!-- HEARTS -->
 
 <div class="hearts">
 
@@ -534,7 +577,8 @@ button:hover{
 
 setTimeout(()=>{
 
-    const loader = document.getElementById('loader');
+    const loader =
+    document.getElementById('loader');
 
     loader.style.opacity='0';
 
@@ -546,23 +590,26 @@ setTimeout(()=>{
 
 /* PARTICLES */
 
-const particles = document.querySelector('.particles');
+const bg =
+document.querySelector('.bg-particles');
 
 for(let i=0;i<70;i++){
 
-    const particle = document.createElement('div');
+    const p =
+    document.createElement('div');
 
-    particle.classList.add('particle');
+    p.classList.add('particle');
 
-    particle.style.left=Math.random()*100+'vw';
+    p.style.left =
+    Math.random()*100+'vw';
 
-    particle.style.animationDuration=
+    p.style.animationDuration =
     (Math.random()*10+5)+'s';
 
-    particle.style.animationDelay=
+    p.style.animationDelay =
     Math.random()*5+'s';
 
-    particles.appendChild(particle);
+    bg.appendChild(p);
 }
 
 /* OPEN ENVELOPE */
@@ -573,7 +620,9 @@ function openEnvelope(){
     .getElementById('envelope')
     .classList.add('open');
 
-    /* PLAY MUSIC AFTER TOUCH */
+    document
+    .getElementById('passwordBox')
+    .classList.add('show');
 
     const music =
     document.getElementById('bgMusic');
@@ -583,20 +632,28 @@ function openEnvelope(){
 
 /* PASSWORD */
 
-function checkPassword(event){
-
-    event.stopPropagation();
+function checkPassword(){
 
     const pass =
     document.getElementById('password').value;
 
     if(pass === '0905'){
 
-        document.getElementById('lockScreen')
-        .style.display='none';
+        document
+        .getElementById('envelopeContainer')
+        .style.opacity='0';
 
-        document.getElementById('messageScreen')
-        .style.display='block';
+        document
+        .getElementById('passwordBox')
+        .style.opacity='0';
+
+        setTimeout(()=>{
+
+            document
+            .getElementById('messageScreen')
+            .classList.add('show');
+
+        },800);
     }
 
     else{
